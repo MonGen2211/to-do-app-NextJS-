@@ -4,6 +4,8 @@ import './globals.css'
 import MainLayout from '@/component/MainLayout';
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import { Provider } from "react-redux";
+import store from "../store/store";
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -11,7 +13,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body>
         <TanstackProvider>
           <MainLayout>
-            {children}
+            <Provider store={store}>
+              {children}
+            </Provider>
             <ToastContainer /> {/* đặt cuối body */}
           </MainLayout>
         </TanstackProvider>

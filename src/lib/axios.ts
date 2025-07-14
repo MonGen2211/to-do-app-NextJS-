@@ -7,6 +7,6 @@ export const getAuthInfo = () => {
 
 export const axiosAuthInstance = () => axios.create({
   headers: {
-      Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsImlhdCI6MTc1MjAzMzM4MSwiZXhwIjoxNzUyNjM4MTgxfQ.zJ59_HyCqcXPNq7McyUr9HCsXpj5ekI7XgTv3f86E5Y`
+      Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImlhdCI6MTc1MjUwNzA4MywiZXhwIjoxNzUzMTExODgzfQ.beysSjbcol6k3bVB99Rmcr-VT3q0HuTDl5hxPiRYSJI`
   }
 })

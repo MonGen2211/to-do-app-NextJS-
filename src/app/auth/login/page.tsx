@@ -7,32 +7,56 @@ import { Label } from "@/components/ui/label"
 import { Separator } from "@/components/ui/separator"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Eye, EyeOff, Github, Mail } from "lucide-react"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { userSchema } from "@/schemas/login.schema"
 import axios from "axios"
 import { toast } from "react-toastify"
-
+import { useDispatch } from "react-redux"
+import { Login } from '@/store/slices/authSlice'
+import { useRouter } from "next/navigation"
 
 
 export default function Component() {
+  const dispatch = useDispatch()
+  // const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn)
+
   const [formData, setFormData] = useState({
     email: '',
     password: '',
   })
 
+  const router = useRouter()
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     const result = userSchema.safeParse(formData)
     if(result){
       const res = await axios.post("http://localhost:2211/auth/login", formData);
+      dispatch(Login())
+      router.push('/') // Chuyển hướng nếu chưa đăng nhập
       toast.success(res.data.message)  
     }
   }
-  
   const [showPassword, setShowPassword] = useState(false)
 
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean | null>(null)
 
+  useEffect(() => {
+    const stored = localStorage.getItem('auth')
+    if (stored) {
+      const parsed = JSON.parse(stored)
+      setIsLoggedIn(parsed.isLoggedIn)
+    } else {
+      setIsLoggedIn(false)
+    }
+  }, [])
+
+  useEffect(() => {
+    if (isLoggedIn === true) {
+      router.push('/') // Chuyển hướng nếu chưa đăng nhập
+    }
+  }, [isLoggedIn, router])
+  
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 to-slate-100 p-4">
